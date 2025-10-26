@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Head Lice Management Interactive Quiz - Dr. Samar J Melhem</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #e9d5ff 0%, #dcfce7 50%, #f3e8ff 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #9333ea 0%, #22c55e 100%);
+            color: white;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .header .subtitle {
+            color: #e9d5ff;
+            font-size: 0.875rem;
+        }
+
+        .credentials {
+            text-align: right;
+        }
+
+        .credentials .name {
+            font-size: 1.125rem;
+            font-weight: 600;
+        }
+
+        .credentials .title {
+            color: #e9d5ff;
+            font-size: 0.875rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .card-header.purple-green {
+            background: linear-gradient(90deg, #f3e8ff 0%, #dcfce7 100%);
+        }
+
+        .card-header.green-purple {
+            background: linear-gradient(90deg, #dcfce7 0%, #f3e8ff 100%);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #581c87;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title.green {
+            color: #166534;
+        }
+
+        .card-description {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .progress-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #e5e7eb;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #9333ea 0%, #22c55e 100%);
+            transition: width 0.3s ease;
+        }
+
+        .score-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(90deg, #9333ea 0%, #22c55e 100%);
+            color: white;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 1.125rem;
+        }
+
+        .button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .button-primary {
+            background: linear-gradient(90deg, #9333ea 0%, #22c55e 100%);
+            color: white;
+        }
+
+        .button-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(147, 51, 234, 0.4);
+        }
+
+        .button-outline {
+            background: white;
+            border: 2px solid #9333ea;
+            color: #9333ea;
+        }
+
+        .button-outline:hover {
+            background: #f3e8ff;
+        }
+
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .question-block {
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-block:last-child {
+            border-bottom: none;
+        }
+
+        .question-header {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .question-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .badge-purple {
+            background: #f3e8ff;
+            color: #7e22ce;
+            border: 1px solid #c084fc;
+        }
+
+        .badge-green {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+
+        .question-text {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .figure-container {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .figure-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .figure-caption {
+            text-align: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .radio-option:hover, .checkbox-option:hover {
+            background: #f9fafb;
+        }
+
+        .radio-option input, .checkbox-option input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .radio-option label, .checkbox-option label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .radio-option.correct {
+            background: #dcfce7;
+            color: #166534;
+            font-weight: 600;
+        }
+
+        .radio-option.incorrect {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .text-input {
+            width: 100%;
+            max-width: 500px;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .text-input:focus {
+            outline: none;
+            border-color: #9333ea;
+        }
+
+        .text-input.correct {
+            border-color: #22c55e;
+            background: #dcfce7;
+        }
+
+        .text-input.incorrect {
+            border-color: #ef4444;
+            background: #fee2e2;
+        }
+
+        .select-box {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            background: white;
+        }
+
+        .select-box:focus {
+            outline: none;
+            border-color: #9333ea;
+        }
+
+        .matching-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .matching-left {
+            flex: 1;
+            padding: 0.75rem;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+        }
+
+        .matching-arrow {
+            color: #9ca3af;
+            font-size: 1.5rem;
+        }
+
+        .matching-right {
+            flex: 1;
+        }
+
+        .feedback-box {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #eff6ff;
+        }
+
+        .feedback-box.purple {
+            background: #f3e8ff;
+        }
+
+        .feedback-box.green {
+            background: #dcfce7;
+        }
+
+        .feedback-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feedback-text {
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .study-tip {
+            color: #7e22ce;
+            font-size: 0.875rem;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .icon-check {
+            color: #22c55e;
+        }
+
+        .icon-x {
+            color: #ef4444;
+        }
+
+        .submit-section {
+            background: linear-gradient(90deg, #9333ea 0%, #22c55e 50%, #9333ea 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-radius: 12px;
+        }
+
+        .submit-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .submit-section p {
+            color: #e9d5ff;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer {
+            background: linear-gradient(90deg, #581c87 0%, #166534 50%, #581c87 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer .author {
+            color: #e9d5ff;
+            margin-bottom: 1rem;
+        }
+
+        .footer .description {
+            color: #dcfce7;
+            font-size: 0.875rem;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .credentials {
+                text-align: center;
+            }
+
+            .matching-row {
+                flex-direction: column;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <h1>🎓 Management of Head Lice</h1>
+                <p class="subtitle">Interactive Educational Quiz</p>
+            </div>
+            <div class="credentials">
+                <p class="name">Dr. Samar J Melhem</p>
+                <p class="title">MSc, MA, PhD</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Progress Card -->
+        <div class="card">
+            <div class="card-header">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <h2 class="card-title">Quiz Progress</h2>
+                    <span id="scoreBadge" class="score-badge hidden"></span>
+                </div>
+                <p class="card-description" id="progressDescription">Complete all 50 questions and submit to see your results</p>
+            </div>
+            <div class="card-content">
+                <div class="progress-section">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span>Questions Answered</span>
+                        <span id="progressText" style="font-weight: 600;">0 / 50</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="button-group" id="actionButtons">
+                    <button class="button button-primary" id="submitBtn" onclick="submitQuiz()" disabled>
+                        📖 Submit Quiz
+                    </button>
+                </div>
+                <div class="button-group hidden" id="exportButtons">
+                    <button class="button button-outline" onclick="exportToCSV()">
+                        📥 Export to CSV
+                    </button>
+                    <button class="button button-outline" onclick="exportToExcel()">
+                        📥 Export to Excel
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: MCQ -->
+        <div class="card">
+            <div class="card-header purple-green">
+                <h2 class="card-title">Section 1: Multiple Choice Questions</h2>
+                <p class="card-description">Select the best answer for each question (30 questions)</p>
+            </div>
+            <div class="card-content" id="mcqSection"></div>
+        </div>
+
+        <!-- Section 2: Matching -->
+        <div class="card">
+            <div class="card-header green-purple">
+                <h2 class="card-title green">Section 2: Matching Questions</h2>
+                <p class="card-description">Match items from the left column with the correct items from the right column (10 questions)</p>
+            </div>
+            <div class="card-content" id="matchingSection"></div>
+        </div>
+
+        <!-- Section 3: Fill in the Blank -->
+        <div class="card">
+            <div class="card-header purple-green">
+                <h2 class="card-title">Section 3: Fill in the Blank</h2>
+                <p class="card-description">Complete each statement with the correct term or phrase (10 questions)</p>
+            </div>
+            <div class="card-content" id="fillBlankSection"></div>
+        </div>
+
+        <!-- Submit Section -->
+        <div class="card submit-section" id="finalSubmit">
+            <h3>Ready to Submit?</h3>
+            <p>Make sure you've answered all questions before submitting. You'll be able to review your answers and see explanations after submission.</p>
+            <button class="button button-outline" style="background: white; color: #9333ea;" onclick="submitQuiz()" id="finalSubmitBtn" disabled>
+                📖 Submit Quiz for Grading
+            </button>
+            <p id="incompleteMessage" style="color: #e9d5ff; font-size: 0.875rem; margin-top: 1rem;"></p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <h3>Management of Head Lice - Educational Material</h3>
+        <p class="author">Prepared by Dr. Samar J Melhem, MSc, MA, PhD</p>
+        <p class="description">This interactive quiz is designed to reinforce learning and complement the lecture material. Ideal for breakout room activities and collaborative learning.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        // Quiz Data
+        const quizData = {
+            mcq: [
+                {
+                    id: 1,
+                    question: "What is the primary mechanism of action of permethrin in treating head lice?",
+                    options: [
+                        "Inhibits acetylcholinesterase enzyme",
+                        "Disrupts sodium channels in nerve cell membranes",
+                        "Blocks GABA receptors",
+                        "Inhibits DNA synthesis"
+                    ],
+                    correct: 1,
+                    explanation: "Permethrin is a synthetic pyrethroid that works by disrupting sodium channels in the nerve cell membranes of lice, causing paralysis and death. This mechanism is different from organophosphates which inhibit acetylcholinesterase.",
+                    study_tip: "Remember: Pyrethroids affect sodium channels → paralysis. This is why they're called 'nerve poisons' for insects."
+                },
+                {
+                    id: 2,
+                    question: "What is the optimal timing for retreatment with pediculicides?",
+                    options: [
+                        "Day 3 after initial treatment",
+                        "Day 5 after initial treatment",
+                        "Day 9 after initial treatment",
+                        "Day 14 after initial treatment"
+                    ],
+                    correct: 2,
+                    explanation: "Day 9 retreatment is optimal because it occurs after remaining eggs hatch (days 6-7) but before newly emerged nymphs can mature and produce new eggs. This targets the critical window when newly hatched nymphs are vulnerable.",
+                    study_tip: "Think of the lifecycle: Eggs hatch days 6-7, so day 9 catches the newly hatched nymphs before they can reproduce.",
+                    figure: "images/page-07.png",
+                    figureCaption: "Figure: Head Lice Life Cycle Timeline"
+                },
+                {
+                    id: 3,
+                    question: "Which pediculicide has the LEAST toxic profile for human use?",
+                    options: [
+                        "Lindane",
+                        "Malathion",
+                        "Permethrin",
+                        "DDT"
+                    ],
+                    correct: 2,
+                    explanation: "Permethrin has the least toxic profile among pediculicides. It has lower risk of systemic absorption, does not cause allergic reactions in plant-allergic individuals (unlike pyrethrins), and has residual activity that continues killing newly hatched lice.",
+                    study_tip: "Permethrin = Preferred choice due to superior safety profile. It's synthetic, so no plant allergy concerns."
+                },
+                {
+                    id: 4,
+                    question: "What is the recommended contact time for pyrethrin treatment?",
+                    options: [
+                        "5 minutes",
+                        "10 minutes",
+                        "20 minutes",
+                        "30 minutes"
+                    ],
+                    correct: 1,
+                    explanation: "Pyrethrin should be left on for exactly 10 minutes. Using a timer is recommended for accuracy. Exceeding this time does not improve effectiveness and may cause unnecessary scalp irritation.",
+                    study_tip: "10 minutes for pyrethrins - not too short, not too long. Set a timer!"
+                },
+                {
+                    id: 5,
+                    question: "Which component enhances the effectiveness of pyrethrins by inhibiting lice enzymes?",
+                    options: [
+                        "Permethrin",
+                        "Piperonyl butoxide",
+                        "Malathion",
+                        "Lindane"
+                    ],
+                    correct: 1,
+                    explanation: "Piperonyl butoxide is combined with pyrethrins to enhance effectiveness by inhibiting the enzymes that lice use to metabolize and detoxify the pyrethrin insecticide. This synergistic combination increases the killing power.",
+                    study_tip: "PBO (Piperonyl Butoxide) = Pyrethrin Booster. It blocks the lice's defense enzymes."
+                },
+                {
+                    id: 6,
+                    question: "What percentage of eggs typically survive the first application of pediculicides?",
+                    options: [
+                        "5-10%",
+                        "10-15%",
+                        "20-30%",
+                        "40-50%"
+                    ],
+                    correct: 2,
+                    explanation: "Approximately 20-30% of eggs typically survive the first application of pediculicides because no approved pediculicide achieves 100% ovicidal effectiveness. This is why retreatment is essential for complete eradication.",
+                    study_tip: "Remember: About 1/4 to 1/3 of eggs survive first treatment - this is why day 9 retreatment is mandatory!"
+                },
+                {
+                    id: 7,
+                    question: "On which type of hair should permethrin be applied?",
+                    options: [
+                        "Completely dry hair",
+                        "Wet hair after shampooing with conditioning shampoo",
+                        "Wet hair after shampooing with non-conditioning shampoo, towel dried",
+                        "Damp hair with conditioner applied"
+                    ],
+                    correct: 2,
+                    explanation: "Permethrin should be applied to wet hair after shampooing with non-conditioning shampoo and towel drying. Conditioning products contain silicone-based additives that interfere with permethrin's ability to adhere to the hair shaft, reducing its residual effectiveness.",
+                    study_tip: "NO conditioner with permethrin! Silicones block adherence. Use non-conditioning shampoo first."
+                },
+                {
+                    id: 8,
+                    question: "What is the complete life cycle duration of head lice from egg to adult death?",
+                    options: [
+                        "15-20 days",
+                        "21-28 days",
+                        "33-35 days",
+                        "45-50 days"
+                    ],
+                    correct: 2,
+                    explanation: "The complete life cycle spans approximately 33-35 days from egg laying to adult death. This timeline is crucial for determining optimal treatment schedules and follow-up care, as each stage presents different vulnerabilities to treatment.",
+                    study_tip: "Think 'about a month' - 33-35 days covers the full cycle from egg to death.",
+                    figure: "images/page-06.png",
+                    figureCaption: "Figure: Head Lice Life Cycle & Treatment Targets"
+                },
+                {
+                    id: 9,
+                    question: "How many eggs does a female louse lay per day during active reproduction?",
+                    options: [
+                        "1-2 eggs",
+                        "4-8 eggs",
+                        "10-15 eggs",
+                        "20-25 eggs"
+                    ],
+                    correct: 1,
+                    explanation: "Female lice lay approximately 4-8 eggs per day consistently for about 16 days of active reproduction. This rapid reproduction rate demonstrates why untreated infestations can quickly become severe and why multiple treatment cycles are necessary.",
+                    study_tip: "4-8 eggs daily for 16 days = rapid population explosion if untreated!"
+                },
+                {
+                    id: 10,
+                    question: "Which modern pediculicide replaced DDT due to safety concerns?",
+                    options: [
+                        "Petroleum products only",
+                        "Lindane, pyrethrin, permethrin, and malathion",
+                        "Tea tree oil and lavender oil",
+                        "Vinegar and mayonnaise"
+                    ],
+                    correct: 1,
+                    explanation: "Modern pediculicides including lindane, pyrethrin, permethrin, and malathion were developed as safer alternatives to DDT, which was discontinued due to concerns about carcinogenic effects and endocrine disruption. These newer agents have improved safety profiles.",
+                    study_tip: "Post-DDT era brought the 'four moderns': Lindane, Pyrethrin, Permethrin, Malathion."
+                },
+                {
+                    id: 11,
+                    question: "What is the primary limitation of vinegar (acetic acid) treatment for head lice?",
+                    options: [
+                        "It causes severe scalp burns",
+                        "It does not kill live lice - only assists with nit removal",
+                        "It promotes lice reproduction",
+                        "It is too expensive for routine use"
+                    ],
+                    correct: 1,
+                    explanation: "Vinegar does not kill live lice; it only helps dissolve the cement that attaches nits to hair shafts, making mechanical removal more effective. It must be combined with lice-killing treatments for effectiveness and serves as an adjunct to primary pediculicide therapy.",
+                    study_tip: "Vinegar = Nit glue dissolver, NOT lice killer. Always combine with actual pediculicide."
+                },
+                {
+                    id: 12,
+                    question: "How long can head lice survive away from the human host?",
+                    options: [
+                        "Less than 1 hour",
+                        "1-2 days",
+                        "5-7 days",
+                        "2-3 weeks"
+                    ],
+                    correct: 1,
+                    explanation: "Head lice cannot survive more than 1-2 days away from the host because they are obligate human parasites that require regular blood meals and specific scalp conditions. This biological limitation is important for understanding transmission patterns and environmental management.",
+                    study_tip: "Lice are 'needy parasites' - they die within 1-2 days off the scalp. This limits environmental concerns."
+                },
+                {
+                    id: 13,
+                    question: "Which stage of the lice life cycle is MOST susceptible to pediculicide treatment?",
+                    options: [
+                        "Eggs (nits)",
+                        "First nymph stage",
+                        "Second nymph stage",
+                        "Adult lice"
+                    ],
+                    correct: 3,
+                    explanation: "Adult lice are the primary target and most susceptible stage for all pediculicide treatments. Eggs have limited ovicidal activity with most treatments, and nymphs are vulnerable during molting phases. This differential susceptibility explains why retreatment is necessary.",
+                    study_tip: "Adults = Most vulnerable. Eggs = Most resistant. That's why we need two treatments!"
+                },
+                {
+                    id: 14,
+                    question: "What is the size of an adult head louse?",
+                    options: [
+                        "0.5-1mm",
+                        "1-2mm",
+                        "2-3mm",
+                        "4-5mm"
+                    ],
+                    correct: 2,
+                    explanation: "Adult head lice are 2-3mm in size, brown in color, have 6 legs, and show visible movement on the scalp surface. This size makes them visible to the naked eye during careful examination, which is essential for definitive diagnosis.",
+                    study_tip: "Adults are 2-3mm - about the size of a sesame seed. Visible but small!",
+                    figure: "images/page-11.png",
+                    figureCaption: "Figure: Stage Identification Guide"
+                },
+                {
+                    id: 15,
+                    question: "Which natural oil has been studied in randomized controlled trials comparing it to 1% permethrin shampoo?",
+                    options: [
+                        "Tea tree oil",
+                        "Lavender oil",
+                        "Coconut oil",
+                        "Peppermint oil"
+                    ],
+                    correct: 2,
+                    explanation: "Coconut oil (plus vinegar) was compared to 1% permethrin shampoo in a randomized controlled trial by Moreno-Alsalsua (2016). While natural treatments show promise, they generally require longer contact times and may need multiple applications compared to conventional pediculicides.",
+                    study_tip: "Coconut oil has the strongest clinical evidence among natural treatments, but still needs longer contact time."
+                },
+                {
+                    id: 16,
+                    question: "What is the recommended minimum contact time for tea tree oil treatment?",
+                    options: [
+                        "10 minutes",
+                        "20 minutes",
+                        "30 minutes",
+                        "60 minutes"
+                    ],
+                    correct: 2,
+                    explanation: "Tea tree oil should be applied to the scalp and left for 30 minutes before combing out. It must be diluted with a carrier oil before application. Tea tree oil demonstrates insecticidal properties against lice but requires longer contact times than conventional treatments.",
+                    study_tip: "Natural oils need MORE time: 30+ minutes for tea tree oil vs 10 minutes for pyrethrins."
+                },
+                {
+                    id: 17,
+                    question: "What is the primary advantage of permethrin's residual activity?",
+                    options: [
+                        "It prevents future infestations indefinitely",
+                        "It kills nymphs emerging from 20-30% of eggs surviving initial treatment",
+                        "It eliminates the need for environmental management",
+                        "It allows for once-weekly application"
+                    ],
+                    correct: 1,
+                    explanation: "Permethrin leaves a protective residue on hair that continues killing nymphs emerging from the 20-30% of eggs that survive the initial treatment. This residual activity is a key advantage, though modern hair products with silicone can interfere with this benefit.",
+                    study_tip: "Permethrin's 'bonus feature' = residual killing power for newly hatched nymphs. But silicones can block this!"
+                },
+                {
+                    id: 18,
+                    question: "Which pediculicide is derived from chrysanthemum flowers?",
+                    options: [
+                        "Permethrin",
+                        "Pyrethrins",
+                        "Malathion",
+                        "Lindane"
+                    ],
+                    correct: 1,
+                    explanation: "Pyrethrins are natural insecticides derived from chrysanthemum flowers. They are combined with piperonyl butoxide to enhance effectiveness. This natural origin means they can cause allergic reactions in individuals with plant allergies, unlike synthetic permethrin.",
+                    study_tip: "Pyrethrins = Plant-based (chrysanthemum). Can cause plant allergies. Permethrin = Synthetic version, no plant allergy.",
+                    figure: "images/page-02.png",
+                    figureCaption: "Figure: Understanding Head Lice Biology"
+                },
+                {
+                    id: 19,
+                    question: "When do head lice eggs typically hatch?",
+                    options: [
+                        "Days 2-3",
+                        "Days 4-5",
+                        "Days 6-7",
+                        "Days 10-12"
+                    ],
+                    correct: 2,
+                    explanation: "Head lice eggs hatch on days 6-7 after being laid. This timing is critical for treatment planning because retreatment must occur after hatching but before the newly emerged nymphs can mature and reproduce, which is why day 9 is optimal for retreatment.",
+                    study_tip: "Eggs hatch days 6-7. Retreat day 9 = catch the newly hatched before they can reproduce!"
+                },
+                {
+                    id: 20,
+                    question: "What factor in modern hair care products significantly reduces permethrin's effectiveness?",
+                    options: [
+                        "Sulfates",
+                        "Parabens",
+                        "Silicone-based additives",
+                        "Fragrances"
+                    ],
+                    correct: 2,
+                    explanation: "Silicone-based additives in most current conditioners and hair products interfere with permethrin's ability to adhere to the hair shaft, diminishing its residual effect. This is why non-conditioning shampoo should be used before permethrin application.",
+                    study_tip: "Silicones = Permethrin's enemy. They coat hair and prevent adherence. Always use non-conditioning shampoo first!"
+                },
+                {
+                    id: 21,
+                    question: "How many molting stages do head lice nymphs go through?",
+                    options: [
+                        "1 molt",
+                        "2 molts",
+                        "3 molts",
+                        "4 molts"
+                    ],
+                    correct: 2,
+                    explanation: "Head lice nymphs go through three molting stages: Stage 1 (days 8-9), Stage 2 (days 11-12), and Stage 3 (days 16-17). Each molt represents growth and development toward the adult stage. Nymphs are vulnerable to most pediculicides during these molting phases.",
+                    study_tip: "3 molts = 3 growth spurts for nymphs. They're vulnerable during molting - that's when treatments work best!"
+                },
+                {
+                    id: 22,
+                    question: "What is the minimum temperature required for hot water treatment of combs and brushes?",
+                    options: [
+                        "100°F (38°C)",
+                        "120°F (49°C)",
+                        "130°F (54°C)",
+                        "150°F (66°C)"
+                    ],
+                    correct: 2,
+                    explanation: "Combs and brushes should be soaked in hot water at 130°F (54°C) or hotter for a minimum of 10 minutes to kill any attached lice or nits. This temperature-time combination ensures complete decontamination of these items.",
+                    study_tip: "130°F for 10 minutes = comb/brush decontamination. Think 'hot enough to be uncomfortable but not boiling.'"
+                },
+                {
+                    id: 23,
+                    question: "Within how many days should females begin egg production after reaching maturity?",
+                    options: [
+                        "Immediately",
+                        "1-2 days",
+                        "5-7 days",
+                        "10-14 days"
+                    ],
+                    correct: 1,
+                    explanation: "After successful mating, female lice begin egg production within 1-2 days of reaching maturity. This rapid onset of reproduction contributes to the exponential population growth seen in untreated infestations.",
+                    study_tip: "Females waste no time - eggs start within 1-2 days of maturity. This is why early treatment is critical!"
+                },
+                {
+                    id: 24,
+                    question: "What is the recommended duration for active reproduction in female head lice?",
+                    options: [
+                        "5-7 days",
+                        "10-12 days",
+                        "16 days",
+                        "21 days"
+                    ],
+                    correct: 2,
+                    explanation: "Female lice lay eggs consistently for approximately 16 days of active reproduction, producing 4-8 eggs per day during this period. This extended reproductive period contributes to the rapid population growth characteristic of head lice infestations.",
+                    study_tip: "16 days of egg-laying × 4-8 eggs/day = 64-128 eggs per female! Now you see why they spread so fast."
+                },
+                {
+                    id: 25,
+                    question: "Which application method is recommended for pyrethrin treatment?",
+                    options: [
+                        "Apply to wet hair after shampooing",
+                        "Apply to DRY hair starting behind ears and at neck base",
+                        "Apply to damp hair with conditioner",
+                        "Apply to oily unwashed hair"
+                    ],
+                    correct: 1,
+                    explanation: "Pyrethrins should be applied to DRY hair, starting behind the ears and at the base of the neck (the most common infestation sites), then working systematically to cover the entire scalp and hair. This differs from permethrin which is applied to wet hair.",
+                    study_tip: "Pyrethrins = DRY hair. Permethrin = WET hair (after non-conditioning shampoo). Don't mix them up!"
+                },
+                {
+                    id: 26,
+                    question: "What is the primary mechanism of occlusive agents (like petroleum jelly) in treating head lice?",
+                    options: [
+                        "Neurotoxic effect on lice",
+                        "Dissolving the nit cement",
+                        "Suffocation by preventing oxygen access",
+                        "Disrupting lice reproduction"
+                    ],
+                    correct: 2,
+                    explanation: "Occlusive agents create a barrier that suffocates lice and their eggs by preventing oxygen access. However, despite widespread use, these methods have not been evaluated in randomized controlled trials for safety and effectiveness.",
+                    study_tip: "Occlusive = Suffocation method. Sounds logical, but lacks strong clinical evidence. That's an important limitation!"
+                },
+                {
+                    id: 27,
+                    question: "What is the minimum recommended contact time for occlusive agents?",
+                    options: [
+                        "30 minutes",
+                        "2 hours",
+                        "8 hours",
+                        "24 hours"
+                    ],
+                    correct: 2,
+                    explanation: "Occlusive agents require a minimum 8-hour contact time, with overnight application often recommended. Complete hair coverage is needed, and these agents are difficult to remove from hair. This extended contact time is a major disadvantage compared to conventional pediculicides.",
+                    study_tip: "Occlusive agents need LONG contact: 8+ hours (usually overnight). Compare to 10 minutes for pyrethrins!"
+                },
+                {
+                    id: 28,
+                    question: "How far from the scalp indicates that nits are likely from a past (not active) infestation?",
+                    options: [
+                        "More than 1/8 inch",
+                        "More than 1/4 inch",
+                        "More than 1/2 inch",
+                        "More than 1 inch"
+                    ],
+                    correct: 1,
+                    explanation: "Nits more than 1/4 inch from the scalp typically indicate a past infestation rather than an active one. Fresh nits are deposited close to the scalp (within 1/4 inch) where temperature is optimal for egg development. This distinction prevents unnecessary treatment.",
+                    study_tip: "1/4 inch rule: Closer = active, Farther = old. Hair grows, so old nits move away from scalp."
+                },
+                {
+                    id: 29,
+                    question: "Which areas of the scalp are MOST commonly affected by head lice?",
+                    options: [
+                        "Crown and forehead",
+                        "Postauricular (behind ears) and occipital (back of head)",
+                        "Temporal regions (sides)",
+                        "Frontal hairline only"
+                    ],
+                    correct: 1,
+                    explanation: "Head lice are most commonly found in the postauricular (behind ears) and occipital (back of head) areas of the scalp. These warmer, more protected areas provide optimal conditions for lice. Examination should focus on these areas first.",
+                    study_tip: "Behind ears + back of head = lice favorite spots. Warm and protected. Always check these areas first!",
+                    figure: "images/page-04.png",
+                    figureCaption: "Figure: Types of Lice Infestations"
+                },
+                {
+                    id: 30,
+                    question: "What is the critical gap period when newly hatched nymphs emerge from surviving eggs?",
+                    options: [
+                        "Days 1-3",
+                        "Days 4-5",
+                        "Days 6-9",
+                        "Days 10-14"
+                    ],
+                    correct: 2,
+                    explanation: "Days 6-9 represent the critical gap when newly hatched nymphs emerge from surviving eggs. This period is crucial because these nymphs are vulnerable to treatment but will soon mature and begin reproducing if not eliminated. This explains why retreatment on day 7-9 is essential.",
+                    study_tip: "Days 6-9 = Critical window. Eggs hatch, nymphs emerge, but haven't reproduced yet. Perfect time for second treatment!"
+                }
+            ],
+            matching: [
+                {
+                    id: 1,
+                    instruction: "Match each pediculicide with its primary characteristic or mechanism:",
+                    left_items: [
+                        "Permethrin",
+                        "Pyrethrins",
+                        "Malathion",
+                        "Lindane",
+                        "Piperonyl butoxide"
+                    ],
+                    right_items: [
+                        "Natural insecticide from chrysanthemum flowers",
+                        "Synthetic pyrethroid with residual activity",
+                        "Organophosphate that inhibits acetylcholinesterase",
+                        "Enhances pyrethrin effectiveness by inhibiting lice enzymes",
+                        "Older agent with neurotoxicity concerns"
+                    ],
+                    correct_pairs: [
+                        [0, 1],
+                        [1, 0],
+                        [2, 2],
+                        [3, 4],
+                        [4, 3]
+                    ],
+                    explanation: "Permethrin is a synthetic pyrethroid with residual activity that continues killing newly hatched lice. Pyrethrins are natural insecticides derived from chrysanthemum flowers. Malathion is an organophosphate that works by inhibiting acetylcholinesterase. Lindane is an older agent with significant neurotoxicity concerns. Piperonyl butoxide enhances pyrethrin effectiveness by inhibiting the enzymes lice use to detoxify pyrethrins.",
+                    study_tip: "Group by type: Natural (pyrethrins), Synthetic (permethrin), Organophosphate (malathion), Enhancer (PBO), Old/toxic (lindane)."
+                },
+                {
+                    id: 2,
+                    instruction: "Match each life cycle stage with its duration or timing:",
+                    left_items: [
+                        "Egg hatching",
+                        "First nymph molt",
+                        "Complete life cycle",
+                        "Female egg-laying period",
+                        "Optimal retreatment timing"
+                    ],
+                    right_items: [
+                        "Days 8-9",
+                        "Days 6-7",
+                        "16 days",
+                        "33-35 days",
+                        "Day 9"
+                    ],
+                    correct_pairs: [
+                        [0, 1],
+                        [1, 0],
+                        [2, 3],
+                        [3, 2],
+                        [4, 4]
+                    ],
+                    explanation: "Eggs hatch on days 6-7. The first nymph molt occurs on days 8-9. The complete life cycle from egg to adult death spans 33-35 days. Females actively lay eggs for approximately 16 days. Day 9 is the optimal timing for retreatment because it targets newly hatched nymphs before they can reproduce.",
+                    study_tip: "Create a timeline: Hatch (6-7) → 1st molt (8-9) → Retreat (9) → Egg-laying period (16 days) → Full cycle (33-35 days)."
+                },
+                {
+                    id: 3,
+                    instruction: "Match each treatment method with its primary limitation:",
+                    left_items: [
+                        "Vinegar (acetic acid)",
+                        "Occlusive agents",
+                        "Tea tree oil",
+                        "Hair dryer",
+                        "DDT"
+                    ],
+                    right_items: [
+                        "Can cause lice to become airborne",
+                        "Does not kill live lice",
+                        "Carcinogenic effects and endocrine disruption",
+                        "Lacks randomized controlled trial evidence",
+                        "Requires longer contact time than conventional treatments"
+                    ],
+                    correct_pairs: [
+                        [0, 1],
+                        [1, 3],
+                        [2, 4],
+                        [3, 0],
+                        [4, 2]
+                    ],
+                    explanation: "Vinegar does not kill live lice; it only helps with nit removal. Occlusive agents lack evidence from randomized controlled trials despite widespread use. Tea tree oil requires longer contact times (30+ minutes) compared to conventional pediculicides (10 minutes). Hair dryers can cause live lice to become airborne, spreading infestation. DDT was discontinued due to carcinogenic effects and endocrine disruption concerns.",
+                    study_tip: "Know the 'deal-breakers': Vinegar doesn't kill, oils take longer, occlusives lack evidence, dryers spread lice, DDT is toxic."
+                },
+                {
+                    id: 4,
+                    instruction: "Match each lice stage with its size:",
+                    left_items: [
+                        "Egg (Nit)",
+                        "Nymph",
+                        "Adult louse"
+                    ],
+                    right_items: [
+                        "2-3mm",
+                        "0.8mm",
+                        "1-2mm"
+                    ],
+                    correct_pairs: [
+                        [0, 1],
+                        [1, 2],
+                        [2, 0]
+                    ],
+                    explanation: "Eggs (nits) are the smallest at 0.8mm, appearing as oval, white/brown structures cemented to hair near the scalp. Nymphs are 1-2mm, appearing as smaller, translucent versions of adults. Adult lice are 2-3mm, brown in color with 6 legs and visible movement on the scalp surface.",
+                    study_tip: "Size progression: Egg (0.8mm) < Nymph (1-2mm) < Adult (2-3mm). Each stage roughly doubles in size."
+                },
+                {
+                    id: 5,
+                    instruction: "Match each environmental decontamination item with its treatment requirement:",
+                    left_items: [
+                        "Combs and brushes",
+                        "Bedding and clothing",
+                        "Non-washable items",
+                        "Large items (stuffed animals)"
+                    ],
+                    right_items: [
+                        "Hot wash cycle + 10 min hot dry",
+                        "130°F (54°C) for 10 minutes",
+                        "Room temperature in sealed bag for 48 hours",
+                        "140°F (60°C) for 20 minutes in hot dryer"
+                    ],
+                    correct_pairs: [
+                        [0, 1],
+                        [1, 0],
+                        [2, 3],
+                        [3, 2]
+                    ],
+                    explanation: "Combs and brushes require soaking in 130°F water for 10 minutes. Bedding and clothing should go through a hot wash cycle plus 10 minutes of hot drying. Non-washable items need 140°F in a hot dryer for 20 minutes. Large items that can't be heated should be sealed in plastic bags at room temperature for 48 hours (longer than lice can survive off the host).",
+                    study_tip: "Temperature matters: Higher heat = shorter time. Or use the 48-hour sealed bag method for items that can't be heated."
+                },
+                {
+                    id: 6,
+                    instruction: "Match each natural oil with its primary mechanism or property:",
+                    left_items: [
+                        "Tea tree oil",
+                        "Coconut oil",
+                        "Lavender oil",
+                        "Peppermint oil"
+                    ],
+                    right_items: [
+                        "Smothers lice and aids mechanical removal",
+                        "Insecticidal and repellent properties",
+                        "Insecticidal properties, studied by Di Campli et al.",
+                        "Mild insecticidal and repellent, pleasant scent"
+                    ],
+                    correct_pairs: [
+                        [0, 2],
+                        [1, 0],
+                        [2, 3],
+                        [3, 1]
+                    ],
+                    explanation: "Tea tree oil demonstrates insecticidal properties and was studied by Di Campli et al. (2012) showing activity against Pediculus capitis. Coconut oil works by smothering lice and making removal easier during combing. Lavender oil has mild insecticidal and repellent properties with a pleasant scent. Peppermint oil provides insecticidal and repellent action, with its strong scent potentially masking human odors.",
+                    study_tip: "Natural oils work differently: Tea tree = kills, Coconut = smothers, Lavender = mild kill + smell, Peppermint = repels."
+                },
+                {
+                    id: 7,
+                    instruction: "Match each type of lice with its primary location:",
+                    left_items: [
+                        "Pediculosis capitis",
+                        "Pediculosis corporis",
+                        "Pediculosis pubis"
+                    ],
+                    right_items: [
+                        "Genital area and coarse hair regions",
+                        "Close to clothing, occasionally on skin",
+                        "Postauricular and occipital scalp"
+                    ],
+                    correct_pairs: [
+                        [0, 2],
+                        [1, 1],
+                        [2, 0]
+                    ],
+                    explanation: "Pediculosis capitis (head lice) are found in postauricular (behind ears) and occipital (back of head) areas of the scalp. Pediculosis corporis (body lice) prefer to remain close to clothing where they hide. Pediculosis pubis (pubic lice) specifically infest the genital area and surrounding coarse hair regions.",
+                    study_tip: "Latin names tell the location: Capitis = head (capital), Corporis = body (corporal), Pubis = pubic area."
+                },
+                {
+                    id: 8,
+                    instruction: "Match each treatment application characteristic with the correct pediculicide:",
+                    left_items: [
+                        "Apply to DRY hair",
+                        "Apply to WET hair after non-conditioning shampoo",
+                        "Leave on for exactly 10 minutes",
+                        "Has residual activity after rinsing"
+                    ],
+                    right_items: [
+                        "Permethrin",
+                        "Both pyrethrins and permethrin",
+                        "Pyrethrins",
+                        "Permethrin only"
+                    ],
+                    correct_pairs: [
+                        [0, 2],
+                        [1, 0],
+                        [2, 1],
+                        [3, 3]
+                    ],
+                    explanation: "Pyrethrins are applied to DRY hair, while permethrin is applied to WET hair after shampooing with non-conditioning shampoo. Both require exactly 10 minutes of contact time. However, only permethrin has residual activity that continues killing newly hatched lice after rinsing, which is a key advantage.",
+                    study_tip: "Key differences: Pyrethrins = dry hair, no residual. Permethrin = wet hair, has residual. Both = 10 minutes."
+                },
+                {
+                    id: 9,
+                    instruction: "Match each clinical scenario with the appropriate assessment:",
+                    left_items: [
+                        "Live lice visible on scalp",
+                        "Nits within 1/4 inch of scalp",
+                        "Nits more than 1/4 inch from scalp",
+                        "Empty nit shells only, no live lice"
+                    ],
+                    right_items: [
+                        "Past infestation, no treatment needed",
+                        "Active infestation requiring treatment",
+                        "Definitive diagnosis of active infestation",
+                        "Possible active infestation, examine closely"
+                    ],
+                    correct_pairs: [
+                        [0, 2],
+                        [1, 3],
+                        [2, 0],
+                        [3, 0]
+                    ],
+                    explanation: "Live lice visible on the scalp provide definitive diagnosis of active infestation requiring immediate treatment. Fresh nits within 1/4 inch of the scalp suggest possible active infestation and warrant close examination. Nits more than 1/4 inch from the scalp or empty nit shells without live lice typically indicate past infestation and do not require treatment.",
+                    study_tip: "Decision tree: Live lice = definitely treat. Fresh nits (< 1/4 inch) = probably treat. Old nits (> 1/4 inch) or empty shells = don't treat."
+                },
+                {
+                    id: 10,
+                    instruction: "Match each reproduction statistic with the correct timeframe:",
+                    left_items: [
+                        "Days to first egg production after maturity",
+                        "Daily egg production rate",
+                        "Duration of active egg-laying",
+                        "Days until egg hatching"
+                    ],
+                    right_items: [
+                        "6-7 days",
+                        "4-8 eggs",
+                        "1-2 days",
+                        "16 days"
+                    ],
+                    correct_pairs: [
+                        [0, 2],
+                        [1, 1],
+                        [2, 3],
+                        [3, 0]
+                    ],
+                    explanation: "After reaching maturity, females begin egg production within 1-2 days. They lay 4-8 eggs per day during active reproduction. This active egg-laying period lasts approximately 16 days. The eggs then take 6-7 days to hatch. Understanding these timeframes is essential for treatment planning.",
+                    study_tip: "Reproduction timeline: Mature → 1-2 days → start laying → 4-8 eggs/day → for 16 days → eggs hatch in 6-7 days."
+                }
+            ],
+            fillInBlank: [
+                {
+                    id: 1,
+                    question: "Permethrin works by disrupting __________ channels in the nerve cell membranes of lice, causing paralysis and death.",
+                    answer: "sodium",
+                    explanation: "Permethrin is a synthetic pyrethroid that disrupts sodium channels in nerve cell membranes, leading to paralysis and death of lice. This mechanism is specific to the nervous system and differs from other classes of pediculicides.",
+                    study_tip: "Think 'sodium channels' = electrical signals disrupted = paralysis. This is the pyrethroid mechanism."
+                },
+                {
+                    id: 2,
+                    question: "The optimal retreatment timing for pediculicides is day __________ after the initial treatment.",
+                    answer: "9",
+                    explanation: "Day 9 is the optimal retreatment timing because it occurs after eggs hatch (days 6-7) but before newly emerged nymphs can mature and produce new eggs. This targets the critical window of vulnerability.",
+                    study_tip: "Remember the magic number: Day 9 = after hatching, before reproduction. This is evidence-based timing."
+                },
+                {
+                    id: 3,
+                    question: "Approximately __________% of eggs typically survive the first application of pediculicides, making retreatment essential.",
+                    answer: "20-30",
+                    explanation: "About 20-30% of eggs survive the first treatment because no approved pediculicide achieves 100% ovicidal effectiveness. This survival rate necessitates the day 9 retreatment to eliminate newly hatched nymphs.",
+                    study_tip: "Roughly 1/4 to 1/3 of eggs survive = why we always need two treatments. No pediculicide is 100% ovicidal."
+                },
+                {
+                    id: 4,
+                    question: "Piperonyl butoxide enhances pyrethrin effectiveness by inhibiting the __________ that lice use to metabolize the insecticide.",
+                    answer: "enzymes",
+                    explanation: "Piperonyl butoxide (PBO) works synergistically with pyrethrins by inhibiting the enzymes that lice use to detoxify and metabolize the pyrethrin insecticide, thereby increasing its killing power and duration of action.",
+                    study_tip: "PBO = enzyme blocker. It stops lice from 'digesting' the poison, making pyrethrins more effective."
+                },
+                {
+                    id: 5,
+                    question: "The complete head lice life cycle from egg to adult death spans approximately __________ days.",
+                    answer: "33-35",
+                    explanation: "The complete life cycle takes 33-35 days from egg laying to adult death. This timeline is crucial for treatment planning, follow-up schedules, and understanding when to assess treatment effectiveness.",
+                    study_tip: "Think 'about one month' - the full cycle is roughly 5 weeks. This helps you understand why follow-up is important.",
+                    figure: "images/page-05.png",
+                    figureCaption: "Figure: Complete Head Lice Life Cycle"
+                },
+                {
+                    id: 6,
+                    question: "Female head lice lay approximately __________ eggs per day during their active reproduction period.",
+                    answer: "4-8",
+                    explanation: "Females consistently lay 4-8 eggs per day for about 16 days of active reproduction. This high reproductive rate explains why untreated infestations can rapidly become severe and spread quickly.",
+                    study_tip: "4-8 eggs daily × 16 days = 64-128 total eggs per female. Multiply by multiple females = exponential growth!"
+                },
+                {
+                    id: 7,
+                    question: "Head lice cannot survive more than __________ days away from the human host.",
+                    answer: "1-2",
+                    explanation: "Head lice are obligate human parasites that die within 1-2 days off the host because they require regular blood meals and specific scalp conditions. This short survival time limits the importance of environmental treatment.",
+                    study_tip: "Lice are 'clingy' - they die quickly (1-2 days) without their human host. This is why environmental concerns are limited."
+                },
+                {
+                    id: 8,
+                    question: "Permethrin should be applied to hair that has been shampooed with __________ shampoo and towel dried.",
+                    answer: "non-conditioning",
+                    explanation: "Non-conditioning shampoo must be used before permethrin application because conditioning products contain silicone-based additives that interfere with permethrin's ability to adhere to the hair shaft and provide residual activity.",
+                    study_tip: "NO conditioner = NO silicones = good permethrin adherence = better residual killing. This is critical for effectiveness!"
+                },
+                {
+                    id: 9,
+                    question: "Pyrethrins are natural insecticides derived from __________ flowers.",
+                    answer: "chrysanthemum",
+                    explanation: "Pyrethrins are extracted from chrysanthemum flowers, making them natural insecticides. Because of their plant origin, they can cause allergic reactions in individuals with plant allergies, unlike synthetic permethrin.",
+                    study_tip: "Chrysanthemum = source of pyrethrins. Plant-based = potential for plant allergies. Remember this distinction from synthetic permethrin."
+                },
+                {
+                    id: 10,
+                    question: "The critical gap period when newly hatched nymphs emerge from surviving eggs is days __________.",
+                    answer: "6-9",
+                    explanation: "Days 6-9 represent the critical gap when eggs hatch and newly emerged nymphs are vulnerable to treatment but haven't yet matured to reproduce. This window explains why retreatment timing is so important for complete eradication.",
+                    study_tip: "Days 6-9 = the 'danger zone' when nymphs hatch but can still be killed before reproducing. Target this window!"
+                }
+            ]
+        };
+
+        // State
+        let userAnswers = {
+            mcq: {},
+            matching: {},
+            fillInBlank: {}
+        };
+        let submitted = false;
+
+        // Initialize quiz
+        function initQuiz() {
+            renderMCQ();
+            renderMatching();
+            renderFillInBlank();
+            updateProgress();
+        }
+
+        // Render MCQ
+        function renderMCQ() {
+            const container = document.getElementById('mcqSection');
+            container.innerHTML = quizData.mcq.map((q, idx) => `
+                <div class="question-block">
+                    <div class="question-header">
+                        <span class="question-badge badge-purple">${idx + 1}</span>
+                        <div style="flex: 1;">
+                            <div class="question-text">${q.question}</div>
+                            ${q.figure ? `
+                                <div class="figure-container">
+                                    <img src="${q.figure}" alt="${q.figureCaption}" />
+                                    <p class="figure-caption">${q.figureCaption}</p>
+                                </div>
+                            ` : ''}
+                            <div class="radio-group">
+                                ${q.options.map((opt, optIdx) => `
+                                    <div class="radio-option" id="mcq-${q.id}-${optIdx}">
+                                        <input type="radio" name="mcq-${q.id}" id="radio-${q.id}-${optIdx}" value="${optIdx}" onchange="handleMCQChange(${q.id}, ${optIdx})">
+                                        <label for="radio-${q.id}-${optIdx}">${opt}</label>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <div id="feedback-mcq-${q.id}" class="feedback-box hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Matching
+        function renderMatching() {
+            const container = document.getElementById('matchingSection');
+            container.innerHTML = quizData.matching.map((q, idx) => `
+                <div class="question-block">
+                    <div class="question-header">
+                        <span class="question-badge badge-green">${idx + 31}</span>
+                        <div style="flex: 1;">
+                            <div class="question-text">${q.instruction}</div>
+                            ${q.left_items.map((leftItem, leftIdx) => `
+                                <div class="matching-row">
+                                    <div class="matching-left">${leftItem}</div>
+                                    <span class="matching-arrow">→</span>
+                                    <div class="matching-right">
+                                        <select class="select-box" onchange="handleMatchingChange(${q.id}, ${leftIdx}, this.value)">
+                                            <option value="">Select match...</option>
+                                            ${q.right_items.map((rightItem, rightIdx) => `
+                                                <option value="${rightIdx}">${rightItem}</option>
+                                            `).join('')}
+                                        </select>
+                                    </div>
+                                </div>
+                            `).join('')}
+                            <div id="feedback-matching-${q.id}" class="feedback-box green hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Fill in Blank
+        function renderFillInBlank() {
+            const container = document.getElementById('fillBlankSection');
+            container.innerHTML = quizData.fillInBlank.map((q, idx) => `
+                <div class="question-block">
+                    <div class="question-header">
+                        <span class="question-badge badge-purple">${idx + 41}</span>
+                        <div style="flex: 1;">
+                            <div class="question-text">${q.question}</div>
+                            ${q.figure ? `
+                                <div class="figure-container">
+                                    <img src="${q.figure}" alt="${q.figureCaption}" />
+                                    <p class="figure-caption">${q.figureCaption}</p>
+                                </div>
+                            ` : ''}
+                            <input type="text" class="text-input" id="fill-${q.id}" placeholder="Type your answer here..." oninput="handleFillInBlankChange(${q.id}, this.value)">
+                            <div id="feedback-fill-${q.id}" class="feedback-box purple hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Handle MCQ change
+        function handleMCQChange(questionId, optionIndex) {
+            userAnswers.mcq[questionId] = optionIndex;
+            updateProgress();
+        }
+
+        // Handle Matching change
+        function handleMatchingChange(questionId, leftIndex, rightIndex) {
+            if (!userAnswers.matching[questionId]) {
+                userAnswers.matching[questionId] = [];
+            }
+            userAnswers.matching[questionId][leftIndex] = parseInt(rightIndex);
+            updateProgress();
+        }
+
+        // Handle Fill in Blank change
+        function handleFillInBlankChange(questionId, value) {
+            userAnswers.fillInBlank[questionId] = value;
+            updateProgress();
+        }
+
+        // Update progress
+        function updateProgress() {
+            const mcqCount = Object.keys(userAnswers.mcq).length;
+            const matchingCount = Object.keys(userAnswers.matching).filter(key => {
+                const matches = userAnswers.matching[key];
+                return matches && matches.filter(m => m !== undefined && m !== '').length === quizData.matching.find(q => q.id == key).left_items.length;
+            }).length;
+            const fillCount = Object.keys(userAnswers.fillInBlank).filter(key => userAnswers.fillInBlank[key].trim() !== '').length;
+            
+            const total = mcqCount + matchingCount + fillCount;
+            const percentage = (total / 50) * 100;
+            
+            document.getElementById('progressText').textContent = `${total} / 50`;
+            document.getElementById('progressFill').style.width = `${percentage}%`;
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const finalSubmitBtn = document.getElementById('finalSubmitBtn');
+            const incompleteMsg = document.getElementById('incompleteMessage');
+            
+            if (percentage >= 100) {
+                submitBtn.disabled = false;
+                finalSubmitBtn.disabled = false;
+                incompleteMsg.textContent = '';
+            } else {
+                submitBtn.disabled = true;
+                finalSubmitBtn.disabled = true;
+                incompleteMsg.textContent = `Please answer all questions to submit (${Math.round(percentage)}% complete)`;
+            }
+        }
+
+        // Submit quiz
+        function submitQuiz() {
+            if (submitted) return;
+            
+            submitted = true;
+            let correct = 0;
+            
+            // Grade MCQ
+            quizData.mcq.forEach(q => {
+                const userAnswer = userAnswers.mcq[q.id];
+                const isCorrect = userAnswer === q.correct;
+                if (isCorrect) correct++;
+                
+                // Update UI
+                q.options.forEach((opt, optIdx) => {
+                    const optionDiv = document.getElementById(`mcq-${q.id}-${optIdx}`);
+                    if (optIdx === q.correct) {
+                        optionDiv.classList.add('correct');
+                        optionDiv.innerHTML += ' ✓';
+                    } else if (optIdx === userAnswer) {
+                        optionDiv.classList.add('incorrect');
+                        optionDiv.innerHTML += ' ✗';
+                    }
+                });
+                
+                // Disable inputs
+                document.querySelectorAll(`input[name="mcq-${q.id}"]`).forEach(input => {
+                    input.disabled = true;
+                });
+                
+                // Show feedback
+                const feedback = document.getElementById(`feedback-mcq-${q.id}`);
+                feedback.classList.remove('hidden');
+                feedback.innerHTML = `
+                    <div class="feedback-header">
+                        <span class="icon ${isCorrect ? 'icon-check' : 'icon-x'}">${isCorrect ? '✓' : '✗'}</span>
+                        <span>${isCorrect ? 'Correct!' : 'Incorrect'}</span>
+                    </div>
+                    <p class="feedback-text"><strong>Explanation:</strong> ${q.explanation}</p>
+                    <p class="study-tip"><strong>💡 Study Tip:</strong> ${q.study_tip}</p>
+                `;
+            });
+            
+            // Grade Matching
+            quizData.matching.forEach(q => {
+                const userMatch = userAnswers.matching[q.id] || [];
+                let allCorrect = true;
+                q.correct_pairs.forEach(([leftIdx, rightIdx]) => {
+                    if (userMatch[leftIdx] !== rightIdx) {
+                        allCorrect = false;
+                    }
+                });
+                if (allCorrect && userMatch.length === q.correct_pairs.length) {
+                    correct++;
+                }
+                
+                // Disable selects
+                document.querySelectorAll(`#matchingSection select`).forEach(select => {
+                    select.disabled = true;
+                });
+                
+                // Show feedback
+                const feedback = document.getElementById(`feedback-matching-${q.id}`);
+                feedback.classList.remove('hidden');
+                feedback.innerHTML = `
+                    <p class="feedback-header" style="color: #166534;">Correct Matches:</p>
+                    ${q.correct_pairs.map(([leftIdx, rightIdx]) => `
+                        <div class="feedback-text">
+                            <span class="icon icon-check">✓</span>
+                            ${q.left_items[leftIdx]} → ${q.right_items[rightIdx]}
+                        </div>
+                    `).join('')}
+                    <p class="feedback-text"><strong>Explanation:</strong> ${q.explanation}</p>
+                    <p class="study-tip"><strong>💡 Study Tip:</strong> ${q.study_tip}</p>
+                `;
+            });
+            
+            // Grade Fill in Blank
+            quizData.fillInBlank.forEach(q => {
+                const userAnswer = (userAnswers.fillInBlank[q.id] || '').toLowerCase().trim();
+                const correctAnswer = q.answer.toLowerCase().trim();
+                const isCorrect = userAnswer === correctAnswer;
+                if (isCorrect) correct++;
+                
+                // Update input
+                const input = document.getElementById(`fill-${q.id}`);
+                input.disabled = true;
+                input.classList.add(isCorrect ? 'correct' : 'incorrect');
+                
+                // Show feedback
+                const feedback = document.getElementById(`feedback-fill-${q.id}`);
+                feedback.classList.remove('hidden');
+                feedback.innerHTML = `
+                    <div class="feedback-header">
+                        <span class="icon ${isCorrect ? 'icon-check' : 'icon-x'}">${isCorrect ? '✓' : '✗'}</span>
+                        <span>${isCorrect ? 'Correct!' : 'Incorrect'}</span>
+                    </div>
+                    <p class="feedback-text"><strong>Correct Answer:</strong> ${q.answer}</p>
+                    <p class="feedback-text"><strong>Explanation:</strong> ${q.explanation}</p>
+                    <p class="study-tip"><strong>💡 Study Tip:</strong> ${q.study_tip}</p>
+                `;
+            });
+            
+            // Update UI
+            const scoreBadge = document.getElementById('scoreBadge');
+            scoreBadge.classList.remove('hidden');
+            scoreBadge.textContent = `Score: ${correct}/50 (${Math.round((correct/50)*100)}%)`;
+            
+            document.getElementById('progressDescription').textContent = 'Review your answers below and see explanations for each question';
+            document.getElementById('actionButtons').classList.add('hidden');
+            document.getElementById('exportButtons').classList.remove('hidden');
+            document.getElementById('finalSubmit').classList.add('hidden');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Export to CSV
+        function exportToCSV() {
+            let csvContent = "Question Type,Question Number,Question,Your Answer,Correct Answer,Result\\n";
+            
+            // MCQ
+            quizData.mcq.forEach(q => {
+                const userAns = userAnswers.mcq[q.id] !== undefined ? q.options[userAnswers.mcq[q.id]] : "Not answered";
+                const correctAns = q.options[q.correct];
+                const result = userAnswers.mcq[q.id] === q.correct ? "Correct" : "Incorrect";
+                csvContent += `MCQ,${q.id},"${q.question.replace(/"/g, '""')}","${userAns}","${correctAns}",${result}\\n`;
+            });
+            
+            // Matching
+            quizData.matching.forEach(q => {
+                const userMatch = userAnswers.matching[q.id] || [];
+                const userAnsStr = q.left_items.map((item, idx) => 
+                    `${item} → ${q.right_items[userMatch[idx]] || "Not matched"}`
+                ).join("; ");
+                const correctAnsStr = q.correct_pairs.map(([l, r]) => 
+                    `${q.left_items[l]} → ${q.right_items[r]}`
+                ).join("; ");
+                csvContent += `Matching,${q.id},"${q.instruction.replace(/"/g, '""')}","${userAnsStr}","${correctAnsStr}",Check manually\\n`;
+            });
+            
+            // Fill in blank
+            quizData.fillInBlank.forEach(q => {
+                const userAns = userAnswers.fillInBlank[q.id] || "Not answered";
+                const correctAns = q.answer;
+                const result = userAns.toLowerCase().trim() === correctAns.toLowerCase().trim() ? "Correct" : "Incorrect";
+                csvContent += `Fill in Blank,${q.id},"${q.question.replace(/"/g, '""')}","${userAns}","${correctAns}",${result}\\n`;
+            });
+            
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'head_lice_quiz_answers.csv';
+            a.click();
+        }
+
+        // Export to Excel
+        function exportToExcel() {
+            const data = [];
+            
+            // MCQ
+            quizData.mcq.forEach(q => {
+                const userAns = userAnswers.mcq[q.id] !== undefined ? q.options[userAnswers.mcq[q.id]] : "Not answered";
+                const correctAns = q.options[q.correct];
+                const result = userAnswers.mcq[q.id] === q.correct ? "Correct" : "Incorrect";
+                data.push({
+                    "Question Type": "MCQ",
+                    "Question Number": q.id,
+                    "Question": q.question,
+                    "Your Answer": userAns,
+                    "Correct Answer": correctAns,
+                    "Result": result
+                });
+            });
+            
+            // Matching
+            quizData.matching.forEach(q => {
+                const userMatch = userAnswers.matching[q.id] || [];
+                const userAnsStr = q.left_items.map((item, idx) => 
+                    `${item} → ${q.right_items[userMatch[idx]] || "Not matched"}`
+                ).join("; ");
+                const correctAnsStr = q.correct_pairs.map(([l, r]) => 
+                    `${q.left_items[l]} → ${q.right_items[r]}`
+                ).join("; ");
+                data.push({
+                    "Question Type": "Matching",
+                    "Question Number": q.id,
+                    "Question": q.instruction,
+                    "Your Answer": userAnsStr,
+                    "Correct Answer": correctAnsStr,
+                    "Result": "Check manually"
+                });
+            });
+            
+            // Fill in blank
+            quizData.fillInBlank.forEach(q => {
+                const userAns = userAnswers.fillInBlank[q.id] || "Not answered";
+                const correctAns = q.answer;
+                const result = userAns.toLowerCase().trim() === correctAns.toLowerCase().trim() ? "Correct" : "Incorrect";
+                data.push({
+                    "Question Type": "Fill in Blank",
+                    "Question Number": q.id,
+                    "Question": q.question,
+                    "Your Answer": userAns,
+                    "Correct Answer": correctAns,
+                    "Result": result
+                });
+            });
+            
+            const ws = XLSX.utils.json_to_sheet(data);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Quiz Answers");
+            XLSX.writeFile(wb, "head_lice_quiz_answers.xlsx");
+        }
+
+        // Initialize on load
+        window.onload = initQuiz;
+    </script>
+</body>
+</html>
+
